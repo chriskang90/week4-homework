@@ -1,8 +1,9 @@
 <%#
 Description of changes:
 1. Modified link_to Edit to use named routing for "places/#{place.id}/edit"
+2. Modified form action for inserting a review to use form_tag for post restful routing
+3. Moved code to retrieve ordered reviews (database query) from the show view to the show method in Places controller
 %>
-
 
 <style>
   h2 {
@@ -43,7 +44,8 @@ Description of changes:
 <h3 style="clear:both; margin-top: 100px">Reviews</h3>
 
 <p>Write a review</p>
-<form action="/reviews/<%= @place.id %>/submit_new">
+
+<%= form_tag "/reviews/#{@place.id}" do %>
   <select name="rating">
     <option>5 star</option>
     <option>4 star</option>
@@ -53,9 +55,9 @@ Description of changes:
   </select>
   <input name="desc" size="50">
   <button>Submit</button>
-</form>
+<% end %>
 
-<% Review.where(place_id: @place.id).order('id desc').each do |review| %>
+<% @reviews.each do |review| %>
   <p>
     <strong><%= ("&#9733;" * review.rating).html_safe  %></strong>
     <%= review.desc %>

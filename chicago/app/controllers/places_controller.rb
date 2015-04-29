@@ -3,6 +3,8 @@
 # 2. Included a limit for the index page following best practices
 # 3. Included a handler for non-existent places in show and edit
 # 4. Modified update method to use named routing
+# 5. Moved code to retrieve ordered reviews from the show view to the show method in this controller
+#    Also added a limit to number of reviews retrieved following best practices
 
 class PlacesController < ApplicationController
 
@@ -13,6 +15,10 @@ class PlacesController < ApplicationController
 
   def show
     @place = Place.find(params[:id])
+
+    # MOVED: Controller should retrieve ordered reviews, NOT THE VIEW
+    # Also add a limit to the number of reviews retrieved, following best practices
+    @reviews = Review.where(place_id: @place.id).order('id desc').limit(100)
 
     # Include a handler if the place does not exist
     if @place == nil
