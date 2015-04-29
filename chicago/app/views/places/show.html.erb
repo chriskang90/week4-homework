@@ -1,3 +1,9 @@
+<%#
+Description of changes:
+1. Modified link_to Edit to use named routing for "places/#{place.id}/edit"
+%>
+
+
 <style>
   h2 {
     color: white;
@@ -26,7 +32,7 @@
 
 <p>
   <span class="price">Admission Price: <%= number_to_currency @place.price/100 %></span>
-  <%= link_to "Edit", "/places/#{@place.id}/edit" %>
+  <%= link_to "Edit", edit_place_url(@place.id) %>
 </p>
 
 <div>

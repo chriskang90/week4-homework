@@ -1,3 +1,10 @@
+<%#
+Description of changes:
+1. Modified link_to place.title to use named routing for "places/#{place.id}"
+2. Modified link_to "(delete)" to use named routing for "places/#{place.id}" and restful routing method delete
+3. Modified link_to "Add a New Place" to use named routing for "/places/new"
+%>
+
 <style>
   h1 {
     border-bottom: solid 3px gray;
@@ -5,15 +12,15 @@
   }
 </style>
 
-<p><%= link_to "Add a New Place", "/places/new" %></p>
+<p><%= link_to "Add a New Place", new_place_url %></p>
 
 <ul>
 
   <% @places.each do |place| %>
     <li>
-      <%= link_to place.title, "/places/#{place.id}" %>
+      <%= link_to place.title, place_url(place.id) %>
       (<%= number_to_currency(place.price / 100) %>)
-      <%= link_to "(delete)", "/places/#{place.id}/delete" %>
+      <%= link_to "(delete)", place_url(place.id), :method=>'delete' %>
     </li>
   <% end %>
 
